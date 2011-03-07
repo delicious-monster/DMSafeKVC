@@ -20,6 +20,14 @@
     a, b, c; SAFE_KVC(a); SAFE_KVC(b); SAFE_KVC(c)
 #define KVC4(a, b, c, d) \
     a, b, c, d; SAFE_KVC(a); SAFE_KVC(b); SAFE_KVC(c); SAFE_KVC(d)
+#define KVC5(a, b, c, d, e) \
+    a, b, c, d, e; SAFE_KVC(a); SAFE_KVC(b); SAFE_KVC(c); SAFE_KVC(d); SAFE_KVC(e)
+#define KVC6(a, b, c, d, e, f) \
+    a, b, c, d, e, f; SAFE_KVC(a); SAFE_KVC(b); SAFE_KVC(c); SAFE_KVC(d); SAFE_KVC(e); SAFE_KVC(f)
+#define KVC7(a, b, c, d, e, f, g) \
+    a, b, c, d, e, f, g; SAFE_KVC(a); SAFE_KVC(b); SAFE_KVC(c); SAFE_KVC(d); SAFE_KVC(e); SAFE_KVC(f); SAFE_KVC(g)
+#define KVC8(a, b, c, d, e, f, g, h) \
+    a, b, c, d, e, f, g, h; SAFE_KVC(a); SAFE_KVC(b); SAFE_KVC(c); SAFE_KVC(d); SAFE_KVC(e); SAFE_KVC(f); SAFE_KVC(g); SAFE_KVC(h)
 
 // Declares a specific safe-KVC-accessible key outside of a property
 // Note that this will be expanded as returning "void *" for pointer properties
