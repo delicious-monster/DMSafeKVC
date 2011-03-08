@@ -36,16 +36,13 @@
 
 
 // Common safe KVC defines
-SAFE_KVC(self);
-SAFE_KVC(selection);
-SAFE_KVC(content);
-SAFE_KVC(length);
-SAFE_KVC(count);
-SAFE_KVC(sortDescriptors);
-SAFE_KVC(arrangedObjects);
-SAFE_KVC(selectedObjects);
-SAFE_KVC(selectionIndex);
-SAFE_KVC(selectionIndexes);
+SAFE_KVC(self); // NSObject
+SAFE_KVC(selection); SAFE_KVC(selectedObjects); SAFE_KVC(content); // NSObjectController
+SAFE_KVC(bounds); // NSView
+SAFE_KVC(isExecuting); SAFE_KVC(isFinished); SAFE_KVC(isReady); // NSOperation
+SAFE_KVC(representedObject); // NSViewController
+SAFE_KVC(arrangedObjects); SAFE_KVC(sortDescriptors); SAFE_KVC(selectionIndex); SAFE_KVC(selectionIndexes); // NSArrayController
+SAFE_KVC(orientation); SAFE_KVC(paperName); SAFE_KVC(paperSize); // NSPrintInfo
 
 
 // Construct a checked key path string
