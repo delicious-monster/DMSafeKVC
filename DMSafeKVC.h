@@ -39,6 +39,8 @@
 SAFE_KVC(self); // NSObject
 SAFE_KVC(selection); SAFE_KVC(selectedObjects); SAFE_KVC(content); // NSObjectController
 SAFE_KVC(bounds); // NSView
+SAFE_KVC(stringValue); // NSControl, NSNumber
+SAFE_KVC(count); // NSArray
 SAFE_KVC(isExecuting); SAFE_KVC(isFinished); SAFE_KVC(isReady); // NSOperation
 SAFE_KVC(representedObject); // NSViewController
 SAFE_KVC(arrangedObjects); SAFE_KVC(sortDescriptors); SAFE_KVC(selectionIndex); SAFE_KVC(selectionIndexes); // NSArrayController
