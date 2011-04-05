@@ -36,15 +36,15 @@
 
 
 // Common safe KVC defines
-SAFE_KVC(self); // NSObject
-SAFE_KVC(selection); SAFE_KVC(*selectedObjects); SAFE_KVC(content); // NSObjectController
-SAFE_KVC(bounds); // NSView
-SAFE_KVC(stringValue); // NSControl, NSNumber
-SAFE_KVC(count); // NSArray
-SAFE_KVC(isExecuting); SAFE_KVC(isFinished); SAFE_KVC(isReady); // NSOperation
-SAFE_KVC(representedObject); // NSViewController
-SAFE_KVC(*arrangedObjects); SAFE_KVC(*sortDescriptors); SAFE_KVC(selectionIndex); SAFE_KVC(selectionIndexes); // NSArrayController
-SAFE_KVC(orientation); SAFE_KVC(paperName); SAFE_KVC(paperSize); // NSPrintInfo
+SAFE_KVC(/*id*/self); // NSObject
+SAFE_KVC(/*id*/ selection); SAFE_KVC(/*NSArray*/ *selectedObjects); SAFE_KVC(/*id*/ content); // NSObjectController
+SAFE_KVC(/*NSRect*/ bounds); // NSView
+SAFE_KVC(/*NSString*/ *stringValue); // NSControl, NSNumber
+SAFE_KVC(/*NSUInteger*/ count); // NSArray
+SAFE_KVC(/*BOOL*/ isExecuting); SAFE_KVC(/*BOOL*/ isFinished); SAFE_KVC(/*BOOL*/ isReady); // NSOperation
+SAFE_KVC(/*id*/ representedObject); // NSViewController
+SAFE_KVC(/*id*/ arrangedObjects); SAFE_KVC(/*NSArray*/ *sortDescriptors); SAFE_KVC(/*NSUInteger*/ selectionIndex); SAFE_KVC(/*NSIndexSet*/ *selectionIndexes); // NSArrayController
+SAFE_KVC(/*NSPrintingOrientation*/ orientation); SAFE_KVC(/*NSString*/ *paperName); SAFE_KVC(/*NSSize*/ paperSize); // NSPrintInfo
 
 
 // Construct a checked key path string
