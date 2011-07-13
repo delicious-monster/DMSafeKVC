@@ -15,7 +15,7 @@ NSString *DMMakeKeyPath(NSString *firstKey, ...) {
     va_list varargs;
     va_start(varargs, firstKey);
     NSString *nextKey = nil;
-    while ((nextKey = va_arg(varargs, NSString *)))
+    while ((nextKey = va_arg(varargs, __unsafe_unretained NSString *)))
         [keyArray addObject:nextKey];
     va_end(varargs);
     return [keyArray componentsJoinedByString:@"."];
