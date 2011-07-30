@@ -39,6 +39,7 @@
 SAFE_KVC(/*id*/self); // NSObject
 SAFE_KVC(/*id*/ selection); SAFE_KVC(/*NSArray*/ *selectedObjects); SAFE_KVC(/*id*/ content); // NSObjectController
 SAFE_KVC(/*NSRect*/ bounds); // NSView
+SAFE_KVC(/*id*/ objectValue); // NSControl
 SAFE_KVC(/*NSString*/ *stringValue); // NSControl, NSNumber
 SAFE_KVC(/*NSUInteger*/ count); // NSArray
 SAFE_KVC(/*BOOL*/ isExecuting); SAFE_KVC(/*BOOL*/ isFinished); SAFE_KVC(/*BOOL*/ isReady); // NSOperation
