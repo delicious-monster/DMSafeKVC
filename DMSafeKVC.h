@@ -45,7 +45,7 @@ SAFE_KVC(/*NSUInteger*/ count); // NSArray
 SAFE_KVC(/*BOOL*/ isExecuting); SAFE_KVC(/*BOOL*/ isFinished); SAFE_KVC(/*BOOL*/ isReady); // NSOperation
 SAFE_KVC(/*id*/ representedObject); // NSViewController
 SAFE_KVC(/*id*/ arrangedObjects); SAFE_KVC(/*NSArray*/ *sortDescriptors); SAFE_KVC(/*NSUInteger*/ selectionIndex); SAFE_KVC(/*NSIndexSet*/ *selectionIndexes); // NSArrayController
-SAFE_KVC(/*NSPrintingOrientation*/ orientation); SAFE_KVC(/*NSString*/ *paperName); SAFE_KVC(/*NSSize*/ paperSize); // NSPrintInfo
+SAFE_KVC(/*NSPrintingOrientation*/ orientation); SAFE_KVC(/*NSString*/ *paperName); SAFE_KVC(/*NSSize*/ paperSize); SAFE_KVC(/*NSRect*/ imageablePageBounds); // NSPrintInfo
 
 
 // Construct a checked key path string
