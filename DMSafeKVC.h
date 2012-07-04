@@ -32,7 +32,7 @@
 // Declares a specific safe-KVC-accessible key outside of a property
 // Note that this will be expanded as returning "void *" for pointer properties
 #define SAFE_KVC(NAME) \
-    void NAME ## __KVCPath_(void)
+    void NAME ## $DMSafeKVC(void)
 
 
 // Common safe KVC defines
@@ -52,7 +52,7 @@ SAFE_KVC(/*NSPrintingOrientation*/ orientation); SAFE_KVC(/*NSString*/ *paperNam
 #define KeyPath(...) \
     DMMakeKeyPath(__VA_ARGS__, nil)
 #define K(x) \
-    __builtin_choose_expr(sizeof(&x ## __KVCPath_), @#x, @"_NOT_A_KEY_")
+    __builtin_choose_expr(sizeof(&x ## $DMSafeKVC), @#x, @"_NOT_A_KEY_")
 
 
 extern NSString *DMMakeKeyPath(NSString *firstKey, ...);
