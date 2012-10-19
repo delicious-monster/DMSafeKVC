@@ -8,9 +8,11 @@
 
 #import "DMSafeKVC.h"
 
+#import <objc/message.h>
 
 
-NSString *DMMakeKeyPath(NSString *firstKey, ...) {
+NSString *DMMakeKeyPath(NSString *firstKey, ...)
+{
     NSMutableArray *keyArray = [NSMutableArray arrayWithObject:firstKey];
     va_list varargs;
     va_start(varargs, firstKey);
@@ -19,4 +21,13 @@ NSString *DMMakeKeyPath(NSString *firstKey, ...) {
         [keyArray addObject:nextKey];
     va_end(varargs);
     return [keyArray componentsJoinedByString:@"."];
+}
+
+
+NSSet *DMKeyPathsAffectingSuperclassOf(SEL valuesAffectingSel, Class targetClass)
+{
+    Class superclass = [targetClass superclass];
+    if ([superclass respondsToSelector:valuesAffectingSel])
+        return objc_msgSend(superclass, valuesAffectingSel) ? : [NSSet set];
+    return [NSSet set];
 }
