@@ -56,8 +56,8 @@ SAFE_KVC(/*NSPrintingOrientation*/ orientation); SAFE_KVC(/*NSString*/ *paperNam
 
 // Use in +keyPathsForValuesAffecting... to get super's keys. Returns an empty set if super doesn't declare any.
 #define KeysAffectingSuperclassOf(cls) \
-    DMKeyPathsAffectingSuperclassOf(_cmd, cls)
+    DMKeyPathsAffectingSuperclassOf(_cmd, cls, @#cls)
 
 
 extern NSString *DMMakeKeyPath(NSString *firstKey, ...);
-extern NSSet *DMKeyPathsAffectingSuperclassOf(SEL valuesAffectingSel, Class targetClass);
+extern NSSet *DMKeyPathsAffectingSuperclassOf(SEL valuesAffectingSel, Class targetClass, NSString *classLiteralCheck);

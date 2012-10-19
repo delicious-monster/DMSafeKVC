@@ -24,8 +24,9 @@ NSString *DMMakeKeyPath(NSString *firstKey, ...)
 }
 
 
-NSSet *DMKeyPathsAffectingSuperclassOf(SEL valuesAffectingSel, Class targetClass)
+NSSet *DMKeyPathsAffectingSuperclassOf(SEL valuesAffectingSel, Class targetClass, NSString *notSelfCheck)
 {
+    NSCAssert(![notSelfCheck isEqual:@"self"], @"KeysAffectingSuperclassOf() argument must be explicit class, not 'self', or subclasses will infinite-loop");
     Class superclass = [targetClass superclass];
     if ([superclass respondsToSelector:valuesAffectingSel])
         return objc_msgSend(superclass, valuesAffectingSel) ? : [NSSet set];
