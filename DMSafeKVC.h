@@ -61,3 +61,6 @@ SAFE_KVC(/*NSPrintingOrientation*/ orientation); SAFE_KVC(/*NSString*/ *paperNam
 
 extern NSString *DMMakeKeyPath(NSString *firstKey, ...);
 extern NSSet *DMKeyPathsAffectingSuperclassOf(SEL valuesAffectingSel, Class targetClass, NSString *classLiteralCheck);
+
+extern NSSet *DMOrphanedDependentKeyPathsForClass(Class targetClass); // doesn't check superclass
+extern BOOL DMInstallOrphanedDependentKeyPathCheckOnNSObject();
