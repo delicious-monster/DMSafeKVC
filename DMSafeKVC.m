@@ -59,10 +59,13 @@ NSSet *DMOrphanedDependentKeyPathsForClass(Class targetClass) // doesn't check s
             continue;
         NSString *capitalizedKeyName = [dependentSelector substringFromIndex:dependentKeyPathSelectorPrefix.length];
         if ([targetClass instancesRespondToSelector:NSSelectorFromString(capitalizedKeyName)])
-            continue; // e.g. "keyPathsForValuesAffectingURL" can be satisfied by "URL" or "uRL".
+            continue; // e.g. "keyPathsForValuesAffectingURL" can be satisfied by "URL".
         NSString *lowercaseKeyName = [[capitalizedKeyName substringToIndex:1].lowercaseString stringByAppendingString:[capitalizedKeyName substringFromIndex:1]];
         if ([targetClass instancesRespondToSelector:NSSelectorFromString(lowercaseKeyName)])
-            continue;
+            continue; // e.g. "keyPathsForValuesAffectingFoo" can be satisfied by "foo"
+        NSString *countOfKeyName = [@"countOf" stringByAppendingString:capitalizedKeyName];
+        if ([targetClass instancesRespondToSelector:NSSelectorFromString(countOfKeyName)])
+            continue; // e.g. "keyPathsForValuesAffectingFoo" can be satisfied by "-countOfFoo" (indexed accessor - uncommon, so check this last)
         [orphanedDependentKeyPathSelectorStrings addObject:dependentSelector];
     }
     free(classMethodArray);
