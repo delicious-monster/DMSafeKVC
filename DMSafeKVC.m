@@ -93,7 +93,7 @@ BOOL DMInstallOrphanedDependentKeyPathCheckOnNSObject()
     if (checkOrphanedKeyPathsOnInitInstalled)
         return YES;
 
-    NSLog(@"%s will check classes for orphaned dependent key paths on -init (hoepfully this is a debug build)", __func__);
+    NSLog(@"%s will check classes for orphaned dependent key paths on -init, hopefully this is a debug build!", __func__);
 
     Method originalInit = class_getInstanceMethod([NSObject class], @selector(init));
     Method replacementInit = class_getInstanceMethod([NSObject class], @selector(init_DMSafeKVC_checkOrphanedKeyPaths));
