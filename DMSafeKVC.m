@@ -63,6 +63,9 @@ NSSet *DMOrphanedDependentKeyPathsForClass(Class targetClass) // doesn't check s
         NSString *lowercaseKeyName = [[capitalizedKeyName substringToIndex:1].lowercaseString stringByAppendingString:[capitalizedKeyName substringFromIndex:1]];
         if ([targetClass instancesRespondToSelector:NSSelectorFromString(lowercaseKeyName)])
             continue; // e.g. "keyPathsForValuesAffectingFoo" can be satisfied by "foo"
+        NSString *boolKeyName = [@"is" stringByAppendingString:capitalizedKeyName];
+        if ([targetClass instancesRespondToSelector:NSSelectorFromString(boolKeyName)])
+            continue; // e.g. "keyPathsForValuesAffectingFoo" can be satisfied by "-isFoo"
         NSString *countOfKeyName = [@"countOf" stringByAppendingString:capitalizedKeyName];
         if ([targetClass instancesRespondToSelector:NSSelectorFromString(countOfKeyName)])
             continue; // e.g. "keyPathsForValuesAffectingFoo" can be satisfied by "-countOfFoo" (indexed accessor - uncommon, so check this last)
