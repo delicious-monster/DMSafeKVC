@@ -90,6 +90,9 @@ static NSMutableSet *checkOrphanedKeyPathsOnInitCheckedClasses;
 @interface NSObject (DMSafeKVC)
 - (id)init_DMSafeKVC_checkOrphanedKeyPaths;
 @end
+@interface NSResponder (DMSafeKVC)
+- (id)initWithCoder_DMSafeKVC_checkOrphanedKeyPaths:(NSCoder *)decoder;
+@end
 
 BOOL DMInstallOrphanedDependentKeyPathCheckOnNSObject()
 {
@@ -102,6 +105,11 @@ BOOL DMInstallOrphanedDependentKeyPathCheckOnNSObject()
     Method replacementInit = class_getInstanceMethod([NSObject class], @selector(init_DMSafeKVC_checkOrphanedKeyPaths));
     if (!originalInit || !replacementInit)
         return NSLog(@"%s unable to proceed; -init and replacement must both be present", __func__), NO;
+
+    Method originalNSResponderInitWithCoder = class_getInstanceMethod([NSResponder class], @selector(initWithCoder:));
+    Method replacementNSResponderInitWithCoder = class_getInstanceMethod([NSResponder class], @selector(initWithCoder_DMSafeKVC_checkOrphanedKeyPaths:));
+    if (originalNSResponderInitWithCoder && replacementNSResponderInitWithCoder)
+        method_exchangeImplementations(originalNSResponderInitWithCoder, replacementNSResponderInitWithCoder);
 
     // Must initialize these before the first -init call otherwise we deadlock, because creaing an NSMutableSet itself calls -init
     checkOrphanedKeyPathsOnInitInstalled = YES;
@@ -121,6 +129,34 @@ BOOL DMInstallOrphanedDependentKeyPathCheckOnNSObject()
         return nil;
 
     for (Class ancestorClass = [self class]; (ancestorClass && ancestorClass != [NSObject class]); ancestorClass = class_getSuperclass(ancestorClass)) {
+        dispatch_semaphore_wait(checkOrphanedKeyPathsOnInitMutex, DISPATCH_TIME_FOREVER);
+        const BOOL classHasBeenChecked = [checkOrphanedKeyPathsOnInitCheckedClasses containsObject:ancestorClass];
+        if (!classHasBeenChecked)
+            [checkOrphanedKeyPathsOnInitCheckedClasses addObject:ancestorClass];
+        dispatch_semaphore_signal(checkOrphanedKeyPathsOnInitMutex);
+
+        if (classHasBeenChecked)
+            break; // Once we've checked a class, we know we've checked its superclasses
+
+        @autoreleasepool {
+            for (NSString *orphanedDependentKeyPathSelector in DMOrphanedDependentKeyPathsForClass(ancestorClass))
+                NSLog(@"*** WARNING: Class %@ implements +%@, but no matching accessor found", NSStringFromClass(ancestorClass), orphanedDependentKeyPathSelector);
+        }
+    }
+    return self;
+}
+@end
+
+@implementation NSResponder (DMSafeKVC)
+- (id)initWithCoder_DMSafeKVC_checkOrphanedKeyPaths:(NSCoder *)decoder;
+{
+    // If this is compiled with ARC, the compiler's retain/release/autoreleases cause crashes in some classes (NSTextView).
+
+    // Note: -[NSResponder initWithCoder:] does NOT call -[NSObject init]. It's a common case, so special-case it.
+    if (!(self = [self initWithCoder_DMSafeKVC_checkOrphanedKeyPaths:decoder])) // call original implementation
+        return nil;
+
+    for (Class ancestorClass = [self class]; (ancestorClass && ancestorClass != [NSResponder class]); ancestorClass = class_getSuperclass(ancestorClass)) {
         dispatch_semaphore_wait(checkOrphanedKeyPathsOnInitMutex, DISPATCH_TIME_FOREVER);
         const BOOL classHasBeenChecked = [checkOrphanedKeyPathsOnInitCheckedClasses containsObject:ancestorClass];
         if (!classHasBeenChecked)
