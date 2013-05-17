@@ -65,10 +65,10 @@ NSSet *DMOrphanedDependentKeyPathsForClass(Class targetClass) // doesn't check s
             continue; // e.g. "keyPathsForValuesAffectingFoo" can be satisfied by "foo"
         NSString *boolKeyName = [@"is" stringByAppendingString:capitalizedKeyName];
         if ([targetClass instancesRespondToSelector:NSSelectorFromString(boolKeyName)])
-            continue; // e.g. "keyPathsForValuesAffectingFoo" can be satisfied by "-isFoo"
+            continue; // e.g. "keyPathsForValuesAffectingFoo" can be satisfied by "isFoo"
         NSString *countOfKeyName = [@"countOf" stringByAppendingString:capitalizedKeyName];
         if ([targetClass instancesRespondToSelector:NSSelectorFromString(countOfKeyName)])
-            continue; // e.g. "keyPathsForValuesAffectingFoo" can be satisfied by "-countOfFoo" (indexed accessor - uncommon, so check this last)
+            continue; // e.g. "keyPathsForValuesAffectingFoo" can be satisfied by "countOfFoo" (indexed accessor - uncommon, so check this last)
         [orphanedDependentKeyPathSelectorStrings addObject:dependentSelector];
     }
     free(classMethodArray);
