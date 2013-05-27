@@ -26,6 +26,16 @@ NSString *DMMakeKeyPath(NSString *firstKey, ...)
 
 
 // ARC and MRR safe!
+NSString *DMSplitKeyPath(NSString *keyPath, __autoreleasing NSString **remainingKeyPath)
+{
+    const NSRange firstPathSeparatorRange = [keyPath rangeOfString:@"." options:NSLiteralSearch];
+    if (remainingKeyPath)
+        *remainingKeyPath = (firstPathSeparatorRange.length ? [keyPath substringFromIndex:NSMaxRange(firstPathSeparatorRange)] : nil);
+    return (firstPathSeparatorRange.length ? [keyPath substringToIndex:firstPathSeparatorRange.location] : keyPath);
+}
+
+
+// ARC and MRR safe!
 NSSet *DMKeyPathsAffectingSuperclassOf(SEL valuesAffectingSel, Class targetClass, NSString *notSelfCheck)
 {
     NSCAssert(![notSelfCheck isEqual:@"self"], @"KeysAffectingSuperclassOf() argument must be explicit class, not 'self', or subclasses will infinite-loop");
